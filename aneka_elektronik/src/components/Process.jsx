@@ -1,26 +1,64 @@
 import React from 'react';
+import { MessageSquare, Search, Wrench, CheckCircle, Headphones } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import useScrollReveal from '../hooks/useScrollReveal';
 
 const Process = () => {
+    const { t } = useTranslation();
     const steps = [
-        { num: "01", title: "Contact Us", desc: "Reach out via WhatsApp or our form to schedule." },
-        { num: "02", title: "Diagnosis", desc: "We inspect your device and identify the issue." },
-        { num: "03", title: "Repair", desc: "Expert technicians fix your device with precision." },
-        { num: "04", title: "Testing", desc: "Rigorous quality checks to ensure full functionality." },
-        { num: "05", title: "Support", desc: "Enjoy your fixed device with our warranty backing." }
+        {
+            num: "01",
+            icon: <MessageSquare size={24} />,
+            titleKey: "process.steps.contact.title",
+            descKey: "process.steps.contact.desc"
+        },
+        {
+            num: "02",
+            icon: <Search size={24} />,
+            titleKey: "process.steps.diagnosis.title",
+            descKey: "process.steps.diagnosis.desc"
+        },
+        {
+            num: "03",
+            icon: <Wrench size={24} />,
+            titleKey: "process.steps.repair.title",
+            descKey: "process.steps.repair.desc"
+        },
+        {
+            num: "04",
+            icon: <CheckCircle size={24} />,
+            titleKey: "process.steps.testing.title",
+            descKey: "process.steps.testing.desc"
+        },
+        {
+            num: "05",
+            icon: <Headphones size={24} />,
+            titleKey: "process.steps.support.title",
+            descKey: "process.steps.support.desc"
+        }
     ];
 
-    return (
-        <section id="process" className="section bg-secondary">
-            <div className="container">
-                <h2 className="section-title">How It Works</h2>
-                <p className="section-subtitle">A simple, transparent process designed for your convenience.</p>
+    const [ref, isVisible] = useScrollReveal();
 
-                <div className="process-steps">
+    return (
+        <section id="process" className="section section-light" ref={ref}>
+            <div className="container">
+                <h2 className="section-title">{t('process.title')}</h2>
+                <p className="section-subtitle">{t('process.subtitle')}</p>
+
+                <div className="process-grid">
                     {steps.map((step, index) => (
-                        <div key={index} className="process-step">
-                            <div className="step-number">{step.num}</div>
-                            <h3>{step.title}</h3>
-                            <p>{step.desc}</p>
+                        <div key={index} className="process-card">
+                            <div className="process-header">
+                                <div className="process-icon-box">
+                                    {step.icon}
+                                </div>
+                                <span className="process-num">{step.num}</span>
+                            </div>
+                            <div className="process-body">
+                                <h3>{t(step.titleKey)}</h3>
+                                <p>{t(step.descKey)}</p>
+                            </div>
                         </div>
                     ))}
                 </div>

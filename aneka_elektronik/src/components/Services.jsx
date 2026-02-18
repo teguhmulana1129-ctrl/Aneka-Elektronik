@@ -1,43 +1,31 @@
 import React from 'react';
-import tvImg from '../assets/television.webp';
-import riceImg from '../assets/rice_cooker.webp';
-import ironImg from '../assets/electric_iron.webp';
+import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { servicesData } from '../data/services';
+import useScrollReveal from '../hooks/useScrollReveal';
 
 const Services = () => {
-    const services = [
-        {
-            title: "TV Repair",
-            desc: "Expert repair for LED, LCD, and Smart TVs. Screen replacement, motherboard repair, and power issues.",
-            img: tvImg
-        },
-        {
-            title: "Rice Cooker Repair",
-            desc: "Fixing heating issues, sensor faults, and digital control problems for all Magicom brands.",
-            img: riceImg
-        },
-        {
-            title: "Electric Iron Repair",
-            desc: "Fast service for heating elements, thermostat calibration, and cord replacement.",
-            img: ironImg
-        }
-    ];
+    const [ref, isVisible] = useScrollReveal();
+    const { t } = useTranslation();
 
     return (
-        <section id="services" className="section bg-secondary">
-            <div className="container">
-                <h2 className="section-title">Our Expertise</h2>
-                <p className="section-subtitle">Specialized care for your essential home electronics.</p>
+        <section id="services" className="section section-light" ref={ref}>
+            <div className={`container fade-in-up ${isVisible ? 'visible' : ''}`}>
+                <h2 className="section-title">{t('services.title')}</h2>
+                <p className="section-subtitle">{t('services.subtitle')}</p>
 
                 <div className="grid-3">
-                    {services.map((service, index) => (
-                        <div key={index} className="service-card">
+                    {servicesData.map((service, index) => (
+                        <div key={index} className={`service-card fade-in-up ${isVisible ? 'visible' : ''}`} style={{ transitionDelay: `${index * 100}ms` }}>
                             <div className="service-img-wrapper">
-                                <img src={service.img} alt={service.title} className="service-img" />
+                                <img src={service.img} alt={t(`services.items.${service.id}.title`)} className="service-img" />
                             </div>
                             <div className="service-content">
-                                <h3>{service.title}</h3>
-                                <p>{service.desc}</p>
-                                <a href="#contact" className="service-link">Learn more &rarr;</a>
+                                <h3>{t(`services.items.${service.id}.title`)}</h3>
+                                <p>{t(`services.items.${service.id}.desc`)}</p>
+                                <Link to={`/service/${service.id}`} className="service-link">
+                                    {t('services.learn_more')}
+                                </Link>
                             </div>
                         </div>
                     ))}

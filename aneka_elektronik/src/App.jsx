@@ -1,30 +1,27 @@
 import React from 'react'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar'
-import Hero from './components/Hero'
-import Services from './components/Services'
-import WhyUs from './components/WhyUs'
-import Process from './components/Process'
-import Testimonials from './components/Testimonials'
-import About from './components/About'
-import Contact from './components/Contact'
+import Home from './pages/Home'
+import ServiceDetail from './pages/ServiceDetail'
 import Footer from './components/Footer'
+import ChatWidget from './components/ChatWidget'
 import './App.css'
 
 function App() {
   return (
-    <div className="app-wrapper">
-      <Navbar />
-      <main>
-        <Hero />
-        <Services />
-        <WhyUs />
-        <Process />
-        <Testimonials />
-        <About />
-        <Contact />
-      </main>
-      <Footer />
-    </div>
+    <Router>
+      <div className="app-wrapper">
+        <Navbar />
+        <main>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/service/:slug" element={<ServiceDetail />} />
+          </Routes>
+        </main>
+        <Footer />
+        <ChatWidget />
+      </div>
+    </Router>
   )
 }
 

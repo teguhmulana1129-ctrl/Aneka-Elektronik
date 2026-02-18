@@ -1,36 +1,25 @@
 import React from 'react';
 import { Star } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import useScrollReveal from '../hooks/useScrollReveal';
 
 const Testimonials = () => {
-    const reviews = [
-        {
-            name: "Budi Santoso",
-            text: "Servis TV saya cepat sekali selesai. Gambarnya kembali jernih seperti baru. Sangat profesional!",
-            rating: 5
-        },
-        {
-            name: "Siti Aminah",
-            text: "Magicom saya rusak tidak bisa panas, sekarang sudah normal lagi. Harganya juga transparan.",
-            rating: 5
-        },
-        {
-            name: "Rahmat Hidayat",
-            text: "Pelayanan ramah dan teknisinya sangat mengerti apa yang dikerjakan. Rekomen untuk servis setrika.",
-            rating: 5
-        }
-    ];
+    const { t } = useTranslation();
+    const reviews = t('testimonials.reviews', { returnObjects: true }) || [];
+
+    const [ref, isVisible] = useScrollReveal();
 
     return (
-        <section id="testimonials" className="section">
-            <div className="container">
-                <h2 className="section-title">Happy Customers</h2>
-                <p className="section-subtitle">Read what our clients say about their experience.</p>
+        <section id="testimonials" className="section section-light" ref={ref}>
+            <div className={`container fade-in-up ${isVisible ? 'visible' : ''}`}>
+                <h2 className="section-title">{t('testimonials.title')}</h2>
+                <p className="section-subtitle">{t('testimonials.subtitle')}</p>
 
                 <div className="grid-3">
-                    {reviews.map((review, index) => (
-                        <div key={index} className="review-card">
+                    {Array.isArray(reviews) && reviews.map((review, index) => (
+                        <div key={index} className={`review-card fade-in-up ${isVisible ? 'visible' : ''}`} style={{ transitionDelay: `${index * 100}ms` }}>
                             <div className="stars">
-                                {[...Array(review.rating)].map((_, i) => (
+                                {[...Array(5)].map((_, i) => (
                                     <Star key={i} size={16} fill="#FFD700" color="#FFD700" />
                                 ))}
                             </div>
